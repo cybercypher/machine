@@ -1,6 +1,12 @@
-# Docker Machine
+# MobaXterm Docker Machine
 
 ![](/docs/img/logo.png)
+
+
+__dockermachine__ that works with __mobaxterm__. 
+
+MobaXterm ssh.exe is a bash script which docker-machine can't call (_ssh.exe, works). The code in __v0.8.2-mobaxterm branch__ uses the native GO ssh when it detects windows. There's probably a better way to do this, but I just needed something that works, since "--native-ssh" doesn't work with docker-machine create
+# 
 
 Machine lets you create Docker hosts on your computer, on cloud providers, and
 inside your own data center. It creates servers, installs Docker on them, then
