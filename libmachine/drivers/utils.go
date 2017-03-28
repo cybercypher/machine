@@ -2,7 +2,8 @@ package drivers
 
 import (
 	"fmt"
-
+	"runtime"
+	
 	"github.com/docker/machine/libmachine/log"
 	"github.com/docker/machine/libmachine/mcnutils"
 	"github.com/docker/machine/libmachine/ssh"
@@ -26,6 +27,11 @@ func GetSSHClientFromDriver(d Driver) (ssh.Client, error) {
 		auth = &ssh.Auth{
 			Keys: []string{d.GetSSHKeyPath()},
 		}
+	}
+
+	if runtime.GOOS == "windows" {
+		client, err := ssh.NewNativeClient(d.GetSSHUsername(), address, port, auth)
+		return client, err
 	}
 
 	client, err := ssh.NewClient(d.GetSSHUsername(), address, port, auth)
