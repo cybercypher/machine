@@ -105,6 +105,13 @@ func NewClient(user string, host string, port int, auth *Auth) (Client, error) {
 		return client, err
 	}
 
+	if runtime.GOOS == "windows" {
+		log.Debug("On Windows, Using SSH client type: native")
+		client, err := NewNativeClient(user, host, port, auth)
+		log.Debug(client)
+		return client, err
+	}
+
 	log.Debug("Using SSH client type: external")
 	client, err := NewExternalClient(sshBinaryPath, user, host, port, auth)
 	log.Debug(client)
